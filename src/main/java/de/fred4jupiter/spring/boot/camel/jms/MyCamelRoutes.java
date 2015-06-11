@@ -8,7 +8,6 @@ public class MyCamelRoutes extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("activemq:invoices").to("bean:printConsumer");
-        //from("direct:producer").to("direct:consumer");
+        from("activemq:invoices").to("bean:printConsumer", "mock:printConsumer");
     }
 }

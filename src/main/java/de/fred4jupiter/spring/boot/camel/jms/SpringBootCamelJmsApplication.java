@@ -6,6 +6,7 @@ import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.jms.JmsConfiguration;
+import org.apache.camel.spring.CamelBeanPostProcessor;
 import org.apache.camel.spring.SpringCamelContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -36,6 +37,21 @@ public class SpringBootCamelJmsApplication {
         camelContext.addComponent("activemq", activeMQComponent);
         camelContext.start();
         return camelContext;
+    }
+
+    /**
+     * For using Camel annotations in spring beans.
+     *
+     * @param camelContext
+     * @param applicationContext
+     * @return
+     */
+    @Bean
+    public CamelBeanPostProcessor camelBeanPostProcessor(CamelContext camelContext, ApplicationContext applicationContext) {
+        CamelBeanPostProcessor processor = new CamelBeanPostProcessor();
+        processor.setCamelContext(camelContext);
+        processor.setApplicationContext(applicationContext);
+        return processor;
     }
 
     @Bean

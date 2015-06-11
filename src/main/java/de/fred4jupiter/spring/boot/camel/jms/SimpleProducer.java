@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 public class SimpleProducer {
 
     @Autowired
-    private ProducerTemplate template;
+    private ProducerTemplate producerTemplate;
 
     @Scheduled(cron = "*/5 * * * * *")
     public void createMessages() {
         System.out.println("sending message...");
-        template.sendBody("activemq:invoices","Hello World");
+        producerTemplate.sendBody("activemq:invoices", "Hello World");
     }
 
 }
